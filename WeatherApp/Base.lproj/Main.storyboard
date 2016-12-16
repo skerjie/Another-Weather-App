@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -46,20 +47,57 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="196-DF-RVZ">
+                                <rect key="frame" x="16" y="627" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Getting data..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zzu-I5-MnX">
+                                <rect key="frame" x="57" y="623.5" width="302" height="27.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-ThinItalic" family="Helvetica Neue" pointSize="23"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minutess untill you burn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ug9-SF-CIP">
+                                <rect key="frame" x="76.5" y="220" width="223.5" height="27.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-ThinItalic" family="Helvetica Neue" pointSize="23"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wa9-lZ-fg1">
+                                <rect key="frame" x="19.5" y="267.5" width="337.5" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="9Sb-tm-Hrm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="147"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Wof-lJ-IGp" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="9RH-9O-dRi"/>
+                            <constraint firstItem="wa9-lZ-fg1" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.9" id="FbS-eY-khM"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="196-DF-RVZ" secondAttribute="bottom" constant="20" id="JlA-3g-VU0"/>
+                            <constraint firstItem="Ug9-SF-CIP" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-100" id="Nlo-Dv-633"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Zzu-I5-MnX" secondAttribute="bottom" constant="16" id="O5P-Uk-BLv"/>
                             <constraint firstItem="Wof-lJ-IGp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="5" id="Ue7-Wi-v8m"/>
-                            <constraint firstItem="Wof-lJ-IGp" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="5" id="rW5-BF-gUs"/>
+                            <constraint firstItem="wa9-lZ-fg1" firstAttribute="top" secondItem="Ug9-SF-CIP" secondAttribute="bottom" constant="20" id="Xf7-Ap-HUh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Zzu-I5-MnX" secondAttribute="trailing" id="dOI-vQ-FPv"/>
+                            <constraint firstItem="Zzu-I5-MnX" firstAttribute="leading" secondItem="196-DF-RVZ" secondAttribute="trailing" constant="21" id="f7G-SE-WIA"/>
+                            <constraint firstItem="Ug9-SF-CIP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="sBr-Xm-OyH"/>
+                            <constraint firstItem="196-DF-RVZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="sLE-zg-Pjc"/>
+                            <constraint firstItem="wa9-lZ-fg1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tU3-8e-mha"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Wof-lJ-IGp" secondAttribute="trailing" constant="5" id="unM-dP-gg6"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="196-DF-RVZ" id="7lf-Tr-5X9"/>
                         <outlet property="skinTypeLabel" destination="z7i-VW-h9D" id="9OS-nX-jv1"/>
+                        <outlet property="statusLabel" destination="Zzu-I5-MnX" id="xed-eK-1Eo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="24.800000000000001" y="35.532233883058474"/>
         </scene>
     </scenes>
 </document>

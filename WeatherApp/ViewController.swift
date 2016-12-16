@@ -11,7 +11,9 @@ import MapKit
 import Alamofire
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-
+  
+  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+  @IBOutlet weak var statusLabel: UILabel!
   @IBOutlet weak var skinTypeLabel: UILabel!
   var locationManager = CLLocationManager()
   var coords = CLLocationCoordinate2D(latitude: 40, longitude: 40)
@@ -19,8 +21,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     didSet{
       skinTypeLabel.text = "Skin: " + self.skinType
       Utilities().setSkinType(value: skinType)
+      getWeatherData()
     }
   }
+  var uvIndex = 8
+  var burnTime : Double = 10
   
   
   override func viewDidLoad() {
@@ -56,7 +61,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }))
     self.present(alert, animated: true, completion: nil)
   }
-
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
@@ -73,11 +78,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
       self.present(alert, animated: true, completion: nil)
     }
   }
-
+  
   func getLocation() {
     if let loc = locationManager.location?.coordinate {
       coords = loc
-      getWeatherData()
+      // getWeatherData()
     }
   }
   
@@ -86,16 +91,66 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     print("URL \(url)")
     
     Alamofire.request(url).responseJSON { response in
-   //   print(response.request)  // original URL request
-   //   print(response.response) // HTTP URL response
-   //   print(response.data)     // server data
+      //   print(response.request)  // original URL request
+      //   print(response.response) // HTTP URL response
+      //   print(response.data)     // server data
       print(response.result)   // result of response serialization
       
       if let JSON = response.result.value {
         print("JSON: \(JSON)")
+        
+        if let data = JSON["data"] as? Dictionary<String, AnyObject> {
+          if let weather = data["weather"] as? [Dictionary<String, AnyObject>] {
+            if let uv = weather[0]["uvIndex"] as? String {
+              if let uvI = Int(uv) {
+                self.uvIndex = uvI
+                print("UVINDEX \(uvI)")
+                self.updateUI(dataSuccess: true)
+                return
+              }
+            }
+          }
+        }
       }
+      self.updateUI(dataSuccess: false)
     }
   }
-
+  
+  func updateUI(dataSuccess: Bool) {
+    
+    DispatchQueue.main.async {
+      // failed
+      if !dataSuccess {
+        self.statusLabel.text = "Failed...retrying..."
+        self.getWeatherData()
+        return
+      }
+      // success
+      self.activityIndicator.stopAnimating()
+      // self.activityIndicator.removeFromSuperview()
+      self.statusLabel.text = "GOT UV Data"
+      self.calculateBurnTime()
+      print("burn time: \(self.burnTime)")
+    }
+  }
+  
+  func calculateBurnTime() {
+    var minToBurn : Double = 10
+    
+    switch skinType {
+    case SkinType().type1: minToBurn = BurnTime().burnType1
+    case SkinType().type2: minToBurn = BurnTime().burnType2
+    case SkinType().type3: minToBurn = BurnTime().burnType3
+    case SkinType().type4: minToBurn = BurnTime().burnType4
+    case SkinType().type5: minToBurn = BurnTime().burnType5
+    case SkinType().type6: minToBurn = BurnTime().burnType6
+    default:
+      minToBurn = BurnTime().burnType1
+    }
+    
+    burnTime = minToBurn / Double(self.uvIndex)
+    
+  }
+  
 }
 

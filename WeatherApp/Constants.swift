@@ -13,7 +13,10 @@ import Foundation
 struct WeatherURL {
   
   private let baseUrl = "https://api.worldweatheronline.com/premium/v1/weather.ashx"
-  private let key = "&key=85310973f72e4c4da38170605160910"
+  // my own not working anymore
+  // private let key = "&key=85310973f72e4c4da38170605160910"
+  // key by Grant
+  private let key = "&key=8c3383d3442343c9af983750160208"
   private let numDaysForecast = "&num_of_days=1"
   private let format = "&format=json"
   
@@ -42,4 +45,15 @@ struct SkinType {
 
 struct defaultKeys {
   static let skinType = "skinType"
+}
+
+struct BurnTime {
+  // information for calculation from site http://himaya.com/solar/avoidsunburn.html
+  // all times in minutes
+  let burnType1 : Double = 67
+  let burnType2 : Double = 100
+  let burnType3 : Double = 200
+  let burnType4 : Double = 300
+  let burnType5 : Double = 400
+  let burnType6 : Double = 500
 }
