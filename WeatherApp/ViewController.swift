@@ -9,9 +9,11 @@
 import UIKit
 import MapKit
 import Alamofire
+import UserNotifications
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
   
+  @IBOutlet weak var bigTimeLabel: UILabel!
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
   @IBOutlet weak var statusLabel: UILabel!
   @IBOutlet weak var skinTypeLabel: UILabel!
@@ -38,6 +40,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     // Do any additional setup after loading the view, typically from a nib.
   }
   
+  @IBAction func reminderButtonTapped(_ sender: Any) {
+    
+    let center = UNUserNotificationCenter.current()
+    center.requestAuthorization(options: [.alert, .badge, .sound]) {
+      (granted, error) in
+      if granted {
+        let content = UNMutableNotificationContent()
+        content.title = NSString.localizedUserNotificationString(forKey: "Time's Up!", arguments: nil)
+        content.body = NSString.localizedUserNotificationString(forKey: "You are beginning to burn!", arguments: nil)
+        content.sound = UNNotificationSound.default()
+        
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 120, repeats: false)
+        let request = UNNotificationRequest(identifier: "willburn", content: content, trigger: trigger)
+        center.add(request, withCompletionHandler: nil)
+      }
+    }
+    
+  }
   
   @IBAction func changeSkinButtonTapped(_ sender: Any) {
     let alert = UIAlertController(title: "Skin Type!", message: "Please choose skin type!", preferredStyle: .actionSheet)
@@ -131,6 +152,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
       self.statusLabel.text = "GOT UV Data"
       self.calculateBurnTime()
       print("burn time: \(self.burnTime)")
+      self.bigTimeLabel.text = String(self.burnTime)
     }
   }
   
